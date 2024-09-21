@@ -34,9 +34,6 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
     propertyType: 'defaultType', // Set a default value
     price: '0', // Default price
     address: '123 Default St', // Default address
-    city: 'Default City', // Default city
-    state: 'Default State', // Default state
-    zipCode: '00000', // Default zip code
     bedrooms: '1', // Default number of bedrooms
     bathrooms: '1', // Default number of bathrooms
     hasParking: false, // Default parking
@@ -47,6 +44,9 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
     currency: 'euro', // Default currency is euro
     acCost: '750', // Default AC cost in euro
     lawyerFee: '2200', // Default lawyer fee in euro
+    propertyPrice: 0, // Required field, set to 0 initially
+    furnitureCost: 5000, // Default furniture cost
+    annualAppreciationRate: 1, // Default annual appreciation rate
   })
   const [loading, setLoading] = useState(false)
 
@@ -167,12 +167,19 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
 }
 
 interface FormData {
-    propertyType?: string;
-    price?: string;
-    address?: string;
-    squareMeters?: number; // Add this line
-    balconySize?: number;   // Add this line
-    currency?: string; // Add this line
-    acCost?: string; // Add this line
-    lawyerFee?: string; // Add this line
+    propertyType: string;
+    price: string; // Keep this if it's connected to an input
+    address: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    bedrooms: string;
+    bathrooms: string;
+    hasParking: boolean;
+    hasPool: boolean;
+    hasStorage: number;
+    propertyPrice: number; // Make this required
+    furnitureCost: number; // Add this line
+    annualAppreciationRate: number; // Add this line
+    // ... other fields ...
 }
