@@ -37,9 +37,23 @@ enum Bathrooms {
   Five = '5',
 }
 
+interface FormData {
+  propertyType: string;
+  price: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  bedrooms: string;
+  bathrooms: string;
+  hasParking: boolean;
+  hasPool: boolean;
+  hasStorage: number;
+}
+
 export default function Home() {
   const [showWizard, setShowWizard] = useState(false);
-  const [formData, setFormData] = useState(null);
+  const [formData, setFormData] = useState<FormData | null>(null); // Initialize with FormData or null
 
   const handleButtonClick = (type: string) => {
     console.log(`Button clicked: ${type}`);
@@ -48,7 +62,7 @@ export default function Home() {
     }
   };
 
-  const handleFormData = (data: any) => {
+  const handleFormData = (data: FormData) => {
     setFormData(data); // Store the form data
     setShowWizard(false); // Optionally hide the wizard after submission
   };
