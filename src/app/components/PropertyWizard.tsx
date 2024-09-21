@@ -30,18 +30,23 @@ interface PropertyWizardProps {
 export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps) {
   const router = useRouter()
   const [activeStep, setActiveStep] = useState(0)
-  const [formData, setFormData] = useState<{ [key: string]: any }>({
-    propertyType: '',
-    price: '',
-    address: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    bedrooms: '',
-    bathrooms: '',
-    hasParking: false,
-    hasPool: false,
-    hasStorage: 0, // Added default value for hasStorage
+  const [formData, setFormData] = useState<FormData>({
+    propertyType: 'defaultType', // Set a default value
+    price: '0', // Default price
+    address: '123 Default St', // Default address
+    city: 'Default City', // Default city
+    state: 'Default State', // Default state
+    zipCode: '00000', // Default zip code
+    bedrooms: '1', // Default number of bedrooms
+    bathrooms: '1', // Default number of bathrooms
+    hasParking: false, // Default parking
+    hasPool: false, // Default pool
+    hasStorage: 0, // Default storage
+    squareMeters: 30, // Default value for square meters
+    balconySize: 8,  // Default value for balcony size
+    currency: 'euro', // Default currency is euro
+    acCost: '750', // Default AC cost in euro
+    lawyerFee: '2200', // Default lawyer fee in euro
   })
   const [loading, setLoading] = useState(false)
 
@@ -159,4 +164,15 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
       </Box>
     </ThemeProvider>
   )
+}
+
+interface FormData {
+    propertyType?: string;
+    price?: string;
+    address?: string;
+    squareMeters?: number; // Add this line
+    balconySize?: number;   // Add this line
+    currency?: string; // Add this line
+    acCost?: string; // Add this line
+    lawyerFee?: string; // Add this line
 }

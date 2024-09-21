@@ -39,7 +39,7 @@ enum Bathrooms {
 
 interface FormData {
   propertyType: string;
-  price: string;
+  price: string; // Keep this if it's connected to an input
   address: string;
   city: string;
   state: string;
@@ -48,7 +48,8 @@ interface FormData {
   bathrooms: string;
   hasParking: boolean;
   hasPool: boolean;
-  hasStorage: number;
+  hasStorage: number; // Keep this if it's connected to an input
+  // Removed redundant fields: propertyPrice, currency, reservationFee, etc.
 }
 
 export default function Home() {

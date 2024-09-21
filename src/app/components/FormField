@@ -1,0 +1,33 @@
+import React from 'react';
+import { TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+
+interface FormFieldProps {
+  field: { name: string; label: string; type: string; options?: string[] };
+  value: any;
+  onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => void;
+}
+
+const FormField: React.FC<FormFieldProps> = ({ field, value, onChange }) => {
+  return field.type === 'select' ? (
+    <FormControl fullWidth margin="normal">
+      <InputLabel>{field.label}</InputLabel>
+      <Select name={field.name} value={value || ''} onChange={onChange}>
+        {field.options?.map(option => (
+          <MenuItem key={option} value={option}>{option}</MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  ) : (
+    <TextField
+      fullWidth
+      label={field.label}
+      name={field.name}
+      type={field.type}
+      value={value}
+      onChange={onChange}
+      margin="normal"
+    />
+  );
+};
+
+export default FormField;
