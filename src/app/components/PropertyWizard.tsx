@@ -24,9 +24,10 @@ const theme = createTheme()
 
 interface PropertyWizardProps {
   steps: { label: string; fields: any[] }[];
+  onSubmit: (data: any) => void; // Add the onSubmit prop
 }
 
-export default function PropertyWizard({ steps }: PropertyWizardProps) {
+export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps) {
   const router = useRouter()
   const [activeStep, setActiveStep] = useState(0)
   const [formData, setFormData] = useState<{ [key: string]: any }>({
@@ -65,8 +66,7 @@ export default function PropertyWizard({ steps }: PropertyWizardProps) {
     console.log('Form submitted:', formData)
     await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate a delay for the loading spinner
     setLoading(false);
-    // const queryString = new URLSearchParams(formData).toString(); // Convert formData to query string
-    // router.push(`/new-apt-results?${queryString}`); // Use string with query parameters
+    onSubmit(formData); // Trigger the callback with form data
   }
 
   const renderStepContent = (step: number) => {
