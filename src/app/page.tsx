@@ -1,94 +1,137 @@
-import Image from "next/image";
+"use client";
+
 import styles from "./page.module.css";
+import { Button } from '@mui/material';
+import { useState } from 'react';
+import PropertyWizard from './components/PropertyWizard'; // Adjust the path as necessary
+
+// Define Enums
+enum Currency {
+  Euro = 'euro',
+  USD = 'usd',
+  ILS = 'ils',
+}
+
+enum ConstructionPeriod {
+  SixMonths = '6 months',
+  OneYear = '1 year',
+  TwoYears = '2 years',
+  ThreeYears = '3 years',
+  FourYears = '4 years',
+  FiveYears = '5 years',
+}
+
+enum Bedrooms {
+  One = '1',
+  Two = '2',
+  Three = '3',
+  Four = '4',
+  Five = '5',
+}
+
+enum Bathrooms {
+  One = '1',
+  Two = '2',
+  Three = '3',
+  Four = '4',
+  Five = '5',
+}
 
 export default function Home() {
+  const [showWizard, setShowWizard] = useState(false);
+
+  const handleButtonClick = (type: string) => {
+    console.log(`Button clicked: ${type}`);
+    if (type === 'new') {
+      setShowWizard(true); // Show the PropertyWizard when "Buy New" is clicked
+    }
+  };
+
+  const steps = [
+    {
+      label: 'Location',
+      fields: [
+        { name: 'address', label: 'Address', type: 'text' },
+        { name: 'bedrooms', label: 'Bedrooms', type: 'select', options: Object.values(Bedrooms) }, // Use enum values
+        { name: 'bathrooms', label: 'Bathrooms', type: 'select', options: Object.values(Bathrooms) }, // Use enum values
+        { name: 'sqMeters', label: 'Square Meters', type: 'number' },
+        { name: 'hasBalcony', label: 'Balcony', type: 'checkbox' },
+        { name: 'balconySize', label: 'Balcony Size', type: 'number' },
+      ],
+    },
+    {
+      label: 'Purchase Info',
+      fields: [
+        { name: 'propertyPrice', label: 'Property Price', type: 'number' },
+        { name: 'currency', label: 'Currency', type: 'select', options: Object.values(Currency) }, // Use enum values
+      ],
+    },
+    {
+      label: 'Contractor',
+      fields: [
+        { name: 'reservationFee', label: 'Reservation Fee', type: 'number' },
+        { name: 'reservationFeePercentage', label: 'Reservation Fee Percentage', type: 'number' },
+        { name: 'upfrontPayment', label: 'Upfront Payment', type: 'number' },
+        { name: 'constructionPeriod', label: 'Construction Period', type: 'select', options: Object.values(ConstructionPeriod) }, // Use enum values
+      ],
+    },
+    {
+      label: 'Expenses',
+      fields: [
+        { name: 'acCost', label: 'AC Cost', type: 'number' },
+        { name: 'furnitureCost', label: 'Furniture Cost', type: 'number' },
+        { name: 'lawyerFee', label: 'Lawyer Fee', type: 'number' },
+      ],
+    },
+    {
+      label: 'Extra Features',
+      fields: [
+        { name: 'hasParking', label: 'Parking Included', type: 'checkbox' },
+        { name: 'hasStorage', label: 'Storage', type: 'number', default: 0 }, // Added default value
+        { name: 'isGatedCommunity', label: 'Inside Gated community', type: 'checkbox' },
+        { name: 'hasPool', label: 'Has Pool', type: 'checkbox' },
+        { name: 'hasElevator', label: 'Elevator', type: 'checkbox' },
+
+      ],
+    },
+    {
+      label: 'Estimations',
+      fields: [
+        { name: 'annualAppreciationRate', label: 'Annual Appreciation Rate', type: 'number' },
+      ],
+    },
+    {
+      label: 'Investing Path',
+      fields: [
+        { name: 'flip', label: 'Flip', type: 'checkbox' },
+        { name: 'keep', label: 'Keep', type: 'checkbox' },
+      ],
+    },
+    // ... other steps
+  ]
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
         <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleButtonClick('new')}
           >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
+            Buy New
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => handleButtonClick('used')}
           >
-            Read our docs
-          </a>
+            Buy Used
+          </Button>
         </div>
+        {showWizard && <PropertyWizard steps={steps} /> } 
       </main>
       <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
       </footer>
     </div>
   );

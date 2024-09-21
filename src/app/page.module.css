@@ -32,6 +32,8 @@
   flex-direction: column;
   gap: 32px;
   grid-row-start: 2;
+  height: calc(100vh - 160px); /* Adjust based on your header and footer height */
+  overflow-y: auto; /* Allow scrolling if content exceeds the height */
 }
 
 .main ol {
@@ -90,9 +92,11 @@ a.secondary {
 }
 
 .footer {
-  grid-row-start: 3;
+  position: relative; /* Change to relative to allow it to stay at the bottom of the container */
+  height: 60px; /* Set a fixed height for the footer */
   display: flex;
-  gap: 24px;
+  justify-content: center; /* Center the footer content */
+  align-items: center; /* Center vertically */
 }
 
 .footer a {
