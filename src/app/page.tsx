@@ -59,6 +59,7 @@ export default function Home() {
     console.log(`Button clicked: ${type}`);
     if (type === 'new') {
       setShowWizard(true); // Show the PropertyWizard when "Buy New" is clicked
+      setFormData(null); // Clear the formData when clicking on the "Buy New" button
     }
   };
 
