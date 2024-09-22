@@ -37,6 +37,19 @@ enum Bathrooms {
   Five = '5',
 }
 
+enum YearsToKeep {
+  One = '1',
+  Two = '2',
+  Three = '3',
+  Four = '4',
+  Five = '5',
+  Six = '6',
+  Seven = '7',
+  Eight = '8',
+  Nine = '9',
+  Ten = '10',
+}
+
 interface FormData {
   propertyType: string;
   price: string; // Keep this if it's connected to an input
@@ -120,6 +133,7 @@ export default function Home() {
       label: 'Estimations',
       fields: [
         { name: 'annualAppreciationRate', label: 'Annual Appreciation Rate', type: 'number' },
+        { name: 'yearsToKeep', label: 'Years to Keep Before Selling', type: 'select', options: Object.values(YearsToKeep) }, // New field added
       ],
     },
     {

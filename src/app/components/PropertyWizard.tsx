@@ -32,21 +32,22 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
   const [activeStep, setActiveStep] = useState(0)
   const [formData, setFormData] = useState<FormData>({
     propertyType: 'defaultType', // Set a default value
-    price: '0', // Default price
+    price: 0, // Default price
     address: '123 Default St', // Default address
-    bedrooms: '1', // Default number of bedrooms
-    bathrooms: '1', // Default number of bathrooms
+    bedrooms: 1, // Default number of bedrooms
+    bathrooms: 1, // Default number of bathrooms
     hasParking: false, // Default parking
     hasPool: false, // Default pool
     hasStorage: 0, // Default storage
     squareMeters: 30, // Default value for square meters
     balconySize: 8,  // Default value for balcony size
     currency: 'euro', // Default currency is euro
-    acCost: '750', // Default AC cost in euro
-    lawyerFee: '2200', // Default lawyer fee in euro
+    acCost: 750, // Default AC cost in euro
+    lawyerFee: 2200, // Default lawyer fee in euro
     propertyPrice: 0, // Required field, set to 0 initially
     furnitureCost: 5000, // Default furniture cost
     annualAppreciationRate: 1, // Default annual appreciation rate
+    yearsToKeep: 2
   })
   const [loading, setLoading] = useState(false)
 
@@ -168,18 +169,21 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
 
 interface FormData {
     propertyType: string;
-    price: string; // Keep this if it's connected to an input
+    price: number; // Keep this if it's connected to an input
     address: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    bedrooms: string;
-    bathrooms: string;
+    bedrooms: number;
+    bathrooms: number;
     hasParking: boolean;
     hasPool: boolean;
     hasStorage: number;
+    squareMeters: number;
+    balconySize: number;
     propertyPrice: number; // Make this required
     furnitureCost: number; // Add this line
-    annualAppreciationRate: number; // Add this line
+    annualAppreciationRate: number;
+    currency: string;
+    acCost: number;
+    lawyerFee: number;
+    yearsToKeep: number; // Add this line for the new field
     // ... other fields ...
 }
