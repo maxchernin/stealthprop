@@ -19,35 +19,44 @@ import {
 } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { useRouter } from 'next/navigation'
+import {
+  calculateUpfrontCosts,
+  calculateTotalInvestment,
+  calculateAppreciation,
+  generateReport
+} from "./calculations/buyAndAppreciation";
 
 const theme = createTheme()
 
 interface PropertyWizardProps {
   steps: { label: string; fields: any[] }[];
-  onSubmit: (data: any) => void; // Add the onSubmit prop
+  onSubmit: (data: any) => void;
 }
 
 export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps) {
   const router = useRouter()
   const [activeStep, setActiveStep] = useState(0)
   const [formData, setFormData] = useState<FormData>({
-    propertyType: 'defaultType', // Set a default value
-    price: 0, // Default price
-    address: '123 Default St', // Default address
-    bedrooms: 1, // Default number of bedrooms
-    bathrooms: 1, // Default number of bathrooms
-    hasParking: false, // Default parking
-    hasPool: false, // Default pool
-    hasStorage: 0, // Default storage
-    squareMeters: 30, // Default value for square meters
-    balconySize: 8,  // Default value for balcony size
-    currency: 'euro', // Default currency is euro
-    acCost: 750, // Default AC cost in euro
-    lawyerFee: 2200, // Default lawyer fee in euro
-    propertyPrice: 0, // Required field, set to 0 initially
+    propertyType: 'defaultType',
+    price: 265000, // Default property price
+    address: '123 Default St',
+    bedrooms: 1,
+    bathrooms: 1,
+    hasParking: false,
+    hasPool: false,
+    hasStorage: 0,
+    squareMeters: 65,
+    balconySize: 8,
+    currency: 'euro',
+    acCost: 750, // Default AC cost
+    lawyerFee: 2200, // Default lawyer fee
     furnitureCost: 5000, // Default furniture cost
     annualAppreciationRate: 1, // Default annual appreciation rate
-    yearsToKeep: 2
+    yearsToKeep: 2, // Default years to keep
+    reservationFee: 5000, // Default reservation fee
+    reservationFeePercentage: 2, // Default reservation fee percentage
+    upfrontPayment: 10000, // Default upfront payment
+    constructionPeriod: '2 years', // Default construction period
   })
   const [loading, setLoading] = useState(false)
 
@@ -68,11 +77,31 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
   }
 
   const handleSubmission = async () => {
-    setLoading(true)
-    console.log('Form submitted:', formData)
-    await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate a delay for the loading spinner
-    setLoading(false);
-    onSubmit(formData); // Trigger the callback with form data
+    setLoading(true);
+    console.log('Form submitted:', formData);
+
+    try {
+      const response = await fetch('/api/calculate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      console.log('Calculation result:', result);
+      // Handle the result as needed
+
+    } catch (error) {
+      console.error('Error during submission:', error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   const renderStepContent = (step: number) => {
@@ -169,7 +198,7 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
 
 interface FormData {
     propertyType: string;
-    price: number; // Keep this if it's connected to an input
+    price: number;
     address: string;
     bedrooms: number;
     bathrooms: number;
@@ -178,12 +207,14 @@ interface FormData {
     hasStorage: number;
     squareMeters: number;
     balconySize: number;
-    propertyPrice: number; // Make this required
-    furnitureCost: number; // Add this line
+    furnitureCost: number;
     annualAppreciationRate: number;
     currency: string;
     acCost: number;
     lawyerFee: number;
-    yearsToKeep: number; // Add this line for the new field
-    // ... other fields ...
+    yearsToKeep: number;
+    reservationFee: number;
+    reservationFeePercentage: number;
+    upfrontPayment: number;
+    constructionPeriod: string;
 }
