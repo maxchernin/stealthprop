@@ -5,11 +5,6 @@ export function calculateUpfrontCosts(
     furnitureCost: number,
     upfrontPayment: number
   ): number {
-    console.log(`Reservation Fee: ${reservationFee}`);
-    console.log(`Lawyer Fee: ${lawyerFee}`);
-    console.log(`AC Cost: ${acCost}`);
-    console.log(`Furniture Cost: ${furnitureCost}`);
-    console.log(`Upfront Payment: ${upfrontPayment}`);
     return reservationFee + lawyerFee + acCost + furnitureCost + upfrontPayment;
   }
   
@@ -26,6 +21,7 @@ export function calculateUpfrontCosts(
     yearsHeld: number
   ): number {
     const appreciationFactor = 1 + annualAppreciationRate / 100;
+    console.log('Appreciation factor', appreciationFactor);
     return propertyPrice * appreciationFactor ** yearsHeld;
   }
   

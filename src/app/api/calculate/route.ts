@@ -39,7 +39,7 @@ export async function POST(request: Request) {
   const upfrontCosts = calculateUpfrontCosts(reservationFee, lawyerFee, acCost, furnitureCost, upfrontPayment);
   console.log('Upfront Costs:', upfrontCosts);
   const totalInvestment = calculateTotalInvestment(price, upfrontCosts);
-  console.log('Upfront Costs:', totalInvestment);
+  console.log('Total Investment:', totalInvestment);
   const futureValue = calculateAppreciation(price, annualAppreciationRate, yearsToKeep);
   console.log('Future Value:', futureValue);
   const report = generateReport(price, totalInvestment, futureValue, yearsToKeep, annualAppreciationRate);

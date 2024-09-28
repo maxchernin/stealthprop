@@ -4,6 +4,7 @@ import React, { useState, ChangeEvent } from 'react'
 import { 
   Stepper, 
   Step, 
+  Checkbox,
   StepLabel, 
   Button, 
   TextField, 
@@ -11,6 +12,7 @@ import {
   Paper,
   Box,
   FormControl,
+  FormControlLabel,
   InputLabel,
   Select,
   MenuItem,
@@ -33,6 +35,32 @@ interface PropertyWizardProps {
   onSubmit: (data: any) => void;
 }
 
+interface FormData {
+  propertyType: string;
+  price: number;
+  address: string;
+  bedrooms: number;
+  bathrooms: number;
+  hasParking: boolean;
+  hasPool: boolean;
+  hasBalcony: boolean;
+  hasStorage: number;
+  squareMeters: number;
+  balconySize: number;
+  furnitureCost: number;
+  annualAppreciationRate: number;
+  currency: string;
+  acCost: number;
+  lawyerFee: number;
+  yearsToKeep: number;
+  reservationFee: number;
+  reservationFeePercentage: number;
+  upfrontPayment: number;
+  constructionPeriod: string;
+  flip: boolean; // Add this line
+  keep: boolean; // Add this line
+}
+
 export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps) {
   const router = useRouter()
   const [activeStep, setActiveStep] = useState(0)
@@ -42,8 +70,9 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
     address: '123 Default St',
     bedrooms: 1,
     bathrooms: 1,
-    hasParking: false,
-    hasPool: false,
+    hasParking: false, // Set default to false
+    hasPool: false, // Set default to false
+    hasBalcony: true, // Set default to true
     hasStorage: 0,
     squareMeters: 65,
     balconySize: 8,
@@ -57,6 +86,8 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
     reservationFeePercentage: 2, // Default reservation fee percentage
     upfrontPayment: 10000, // Default upfront payment
     constructionPeriod: '2 years', // Default construction period
+    flip: true, // Initialize this field
+    keep: false, // Initialize this field
   })
   const [loading, setLoading] = useState(false)
 
@@ -126,13 +157,24 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
                   ))}
                 </Select>
               </FormControl>
+            ) : field.type === 'checkbox' ? (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name={field.name}
+                    checked={formData[field.name]}
+                    onChange={handleInputChange}
+                  />
+                }
+                label={field.label}
+              />
             ) : (
               <TextField
                 fullWidth
                 label={field.label}
                 name={field.name}
                 type={field.type}
-                value={formData[field.name]}
+                value={formData[field.name as keyof FormData]} // {{ edit_1 }}
                 onChange={handleInputChange}
                 margin="normal"
               />
@@ -188,33 +230,7 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
           </Button>
           {loading && <CircularProgress sx={{ ml: 2 }} />}
         </Box>
-        <Box className="footer">
-          {/* Footer content here */}
-        </Box>
       </Box>
     </ThemeProvider>
   )
-}
-
-interface FormData {
-    propertyType: string;
-    price: number;
-    address: string;
-    bedrooms: number;
-    bathrooms: number;
-    hasParking: boolean;
-    hasPool: boolean;
-    hasStorage: number;
-    squareMeters: number;
-    balconySize: number;
-    furnitureCost: number;
-    annualAppreciationRate: number;
-    currency: string;
-    acCost: number;
-    lawyerFee: number;
-    yearsToKeep: number;
-    reservationFee: number;
-    reservationFeePercentage: number;
-    upfrontPayment: number;
-    constructionPeriod: string;
 }

@@ -139,8 +139,8 @@ export default function Home() {
     {
       label: 'Investing Path',
       fields: [
-        { name: 'flip', label: 'Flip', type: 'checkbox', default: false },
-        { name: 'keep', label: 'Keep', type: 'checkbox', default: true },
+        { name: 'flip', label: 'Flip', type: 'checkbox', default: true },
+        { name: 'keep', label: 'Keep', type: 'checkbox', default: false },
       ],
     },
     // ... other steps
