@@ -44,7 +44,7 @@ interface FormData {
   hasParking: boolean;
   hasPool: boolean;
   hasBalcony: boolean;
-  hasStorage: number;
+  hasStorage: number; // Ensure this is a number
   squareMeters: number;
   balconySize: number;
   furnitureCost: number;
@@ -56,7 +56,7 @@ interface FormData {
   reservationFee: number;
   reservationFeePercentage: number;
   upfrontPayment: number;
-  constructionPeriod: string;
+  constructionPeriod: number; // Change from string to number
   flip: boolean; // Add this line
   keep: boolean; // Add this line
 }
@@ -66,28 +66,28 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
   const [activeStep, setActiveStep] = useState(0)
   const [formData, setFormData] = useState<FormData>({
     propertyType: 'defaultType',
-    price: 265000, // Default property price
+    price: 265000,
     address: '123 Default St',
     bedrooms: 1,
     bathrooms: 1,
-    hasParking: false, // Set default to false
-    hasPool: false, // Set default to false
-    hasBalcony: true, // Set default to true
+    hasParking: false,
+    hasPool: false,
+    hasBalcony: true,
     hasStorage: 0,
     squareMeters: 65,
     balconySize: 8,
     currency: 'euro',
-    acCost: 750, // Default AC cost
-    lawyerFee: 2200, // Default lawyer fee
-    furnitureCost: 5000, // Default furniture cost
-    annualAppreciationRate: 1, // Default annual appreciation rate
-    yearsToKeep: 2, // Default years to keep
-    reservationFee: 5000, // Default reservation fee
-    reservationFeePercentage: 2, // Default reservation fee percentage
-    upfrontPayment: 10000, // Default upfront payment
-    constructionPeriod: '2 years', // Default construction period
-    flip: true, // Initialize this field
-    keep: false, // Initialize this field
+    acCost: 750,
+    lawyerFee: 2200,
+    furnitureCost: 5000,
+    annualAppreciationRate: 1,
+    yearsToKeep: 2,
+    reservationFee: 5000,
+    reservationFeePercentage: 2,
+    upfrontPayment: 10000,
+    constructionPeriod: 2,
+    flip: true,
+    keep: false,
   })
   const [loading, setLoading] = useState(false)
 
