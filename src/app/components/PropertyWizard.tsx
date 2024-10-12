@@ -126,7 +126,10 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
 
       const result = await response.json();
       console.log('Calculation result:', result);
-      // Handle the result as needed
+        
+        // Navigate to the report page and pass the result
+        const url = `/report?result=${encodeURIComponent(JSON.stringify(result))}`;
+        router.push(url);
 
     } catch (error) {
       console.error('Error during submission:', error);
