@@ -40,7 +40,7 @@ export function calculateUpfrontCosts(
     // It is calculated by dividing the appreciation by the total investment and multiplying by 100
     const annualReturn = (appreciation / totalInvestment) * 100;
 
-    // Calculate the return on investment
+    // Calculate the return on investment - percentage
     // This is the total percentage increase in the value of the investment
     // It is calculated by dividing the future value by the total investment and multiplying by 100
     const returnOnInvestment = (futureValue / totalInvestment) * 100;

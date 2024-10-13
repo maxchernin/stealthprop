@@ -43,7 +43,35 @@ export async function POST(request: Request) {
   const futureValue = calculateAppreciation(price, annualAppreciationRate, yearsToKeep);
   console.log('Future Value:', futureValue);
   const report = generateReport(price, totalInvestment, futureValue, yearsToKeep, annualAppreciationRate);
-
-  // Return the results
-  return NextResponse.json(report);
+  console.log(report);
+  
+  // Aggregate results into a single JSON object
+  const aggregatedResponse = {
+    details: {
+      propertyType: propertyType,
+      price: price,
+      address: address,
+      bedrooms: bedrooms,
+      bathrooms: bathrooms,
+      hasParking: hasParking,
+      hasPool: hasPool,
+      hasStorage: hasStorage,
+      squareMeters: squareMeters,
+      balconySize: balconySize,
+      currency: currency,
+      acCost: acCost,
+      lawyerFee: lawyerFee,
+      furnitureCost: furnitureCost,
+      annualAppreciationRate: annualAppreciationRate,
+      yearsToKeep: yearsToKeep,
+      reservationFee: reservationFee,
+      reservationFeePercentage: reservationFeePercentage,
+      upfrontPayment: upfrontPayment,
+      constructionPeriod: constructionPeriod,
+    },
+    report: report,
+  };
+  console.log(aggregatedResponse);
+  // Return the aggregated results
+  return NextResponse.json(aggregatedResponse);
 }

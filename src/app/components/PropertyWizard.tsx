@@ -27,6 +27,7 @@ import {
   calculateAppreciation,
   generateReport
 } from "./calculations/buyAndAppreciation";
+import Report from './Report'; // Ensure you import the Report component correctly
 
 const theme = createTheme()
 
@@ -61,6 +62,33 @@ interface FormData {
   keep: boolean; // Add this line
 }
 
+// Define the type for report data
+type YourReportDataType = {
+  propertyType: string;
+  price: number;
+  address: string;
+  bedrooms: number;
+  bathrooms: number;
+  hasParking: boolean;
+  hasPool: boolean;
+  hasBalcony: boolean;
+  hasStorage: number;
+  squareMeters: number;
+  balconySize: number;
+  furnitureCost: number;
+  annualAppreciationRate: number;
+  currency: string;
+  acCost: number;
+  lawyerFee: number;
+  yearsToKeep: number;
+  reservationFee: number;
+  reservationFeePercentage: number;
+  upfrontPayment: number;
+  constructionPeriod: number;
+  flip: boolean;
+  keep: boolean;
+};
+
 export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps) {
   const router = useRouter()
   const [activeStep, setActiveStep] = useState(0)
@@ -90,6 +118,8 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
     keep: false,
   })
   const [loading, setLoading] = useState(false)
+  const [reportVisible, setReportVisible] = useState(false) // Add this line
+  const [reportData, setReportData] = useState<YourReportDataType | null>(null) // Update this line with the correct type
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -127,9 +157,11 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
       const result = await response.json();
       console.log('Calculation result:', result);
         
-        // Navigate to the report page and pass the result
-        const url = `/report?result=${encodeURIComponent(JSON.stringify(result))}`;
-        router.push(url);
+        // Instead of navigating, set report data and visibility
+        setReportData(result);
+        setReportVisible(true);
+
+        setLoading(false);
 
     } catch (error) {
       console.error('Error during submission:', error);
@@ -188,6 +220,13 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
     );
   }
 
+  const renderReport = () => {
+    if (!reportVisible || reportData === null) return null; // Add check for reportData
+    return (
+      <Report reportRawData={reportData} /> // Ensure Report is a valid React component
+    );
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '45vh' }}>
@@ -233,6 +272,7 @@ export default function PropertyWizard({ steps, onSubmit }: PropertyWizardProps)
           </Button>
           {loading && <CircularProgress sx={{ ml: 2 }} />}
         </Box>
+        {renderReport()}
       </Box>
     </ThemeProvider>
   )
