@@ -18,7 +18,7 @@ body {
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: linear-gradient(to bottom, #f9f9f9, #eaeaea); /* Subtle gradient */
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -39,4 +39,13 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+/* Card-like container for the form */
+.form-container {
+  background-color: white; /* Card background color */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 20px; /* Padding inside the card */
+  margin: 20px; /* Margin around the card */
 }
